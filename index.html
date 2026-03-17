@@ -1,0 +1,1858 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Hackathon Playbook — SD MC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Condensed:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --han-pink: #e50056;
+      --han-black: #000000;
+      --han-orange: #f5a846;
+      --han-green: #7ac48e;
+      --han-blue: #6ac3ed;
+      --han-alabaster: #f8f8f8;
+      --han-mercury: #e3e3e3;
+      --han-gray: #919191;
+      --font-heading: "Roboto Condensed", "Arial Narrow", sans-serif;
+      --font-body: "Roboto", "Segoe UI", Arial, sans-serif;
+      --sidebar-width: 260px;
+      --content-max: 780px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--han-alabaster);
+      color: var(--han-black);
+      line-height: 1.6;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--han-black);
+      color: white;
+      padding: 0 2rem;
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: white;
+    }
+
+    .han-mark {
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      padding: 3px 8px;
+      text-transform: uppercase;
+    }
+
+    .topbar-title {
+      font-family: var(--font-heading);
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      color: var(--han-mercury);
+    }
+
+    .topbar-meta {
+      font-size: 0.8rem;
+      color: var(--han-gray);
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 52px);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: var(--sidebar-width);
+      background: white;
+      border-right: 1px solid var(--han-mercury);
+      position: sticky;
+      top: 52px;
+      height: calc(100vh - 52px);
+      overflow-y: auto;
+      flex-shrink: 0;
+      padding: 1.5rem 0;
+    }
+
+    .sidebar-label {
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--han-gray);
+      padding: 0 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .nav-section {
+      margin-bottom: 1.5rem;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0.45rem 1.25rem;
+      text-decoration: none;
+      color: var(--han-black);
+      font-size: 0.875rem;
+      transition: background 0.15s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-link:hover {
+      background: var(--han-alabaster);
+      border-left-color: var(--han-mercury);
+    }
+
+    .nav-link.active {
+      border-left-color: var(--han-pink);
+      color: var(--han-pink);
+      font-weight: 500;
+    }
+
+    .nav-link .draft-letter {
+      width: 22px;
+      height: 22px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .nav-link.sub {
+      padding-left: 2.75rem;
+      font-size: 0.82rem;
+      color: var(--han-gray);
+    }
+
+    .nav-link.sub:hover { color: var(--han-black); }
+
+    /* ── MAIN ── */
+    .main {
+      flex: 1;
+      padding: 2.5rem 2rem 4rem;
+      max-width: calc(var(--content-max) + 4rem);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--han-black);
+      color: white;
+      padding: 2.5rem 2rem;
+      margin: -2.5rem -2rem 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      right: -60px;
+      top: -60px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(229,0,86,0.12);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      display: inline-block;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-size: 2.2rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: #ccc;
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      color: var(--han-mercury);
+    }
+
+    .hero-meta-item strong { color: var(--han-orange); }
+
+
+    /* ── SECTION ── */
+    .section {
+      margin-bottom: 3rem;
+      scroll-margin-top: 70px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .draft-badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .draft-badge.strategy { background: var(--han-orange); }
+    .draft-badge.execution { background: var(--han-pink); }
+    .draft-badge.support { background: var(--han-gray); }
+
+    .section-header-text h2 {
+      font-family: var(--font-heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+      color: var(--han-black);
+      line-height: 1.1;
+    }
+
+    .section-header-text .section-sub {
+      font-size: 0.9rem;
+      color: var(--han-gray);
+      margin-top: 2px;
+    }
+
+    .slide-ref {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      color: var(--han-gray);
+      background: var(--han-mercury);
+      padding: 2px 8px;
+      border-radius: 3px;
+      margin-left: 8px;
+      font-family: var(--font-heading);
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+
+    .time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 2px 8px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+
+    .time-badge.orange { background: var(--han-orange); color: var(--han-black); }
+
+    /* ── DRAFT STRIP ── */
+    .draft-strip {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 1.5rem;
+    }
+
+    .draft-strip-letter {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--han-mercury);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--han-gray);
+    }
+
+    .draft-strip-letter.active-strategy {
+      background: var(--han-orange);
+      border-color: var(--han-orange);
+      color: white;
+    }
+
+    .draft-strip-letter.active-execution {
+      background: var(--han-pink);
+      border-color: var(--han-pink);
+      color: white;
+    }
+
+    /* ── CONTENT ELEMENTS ── */
+    h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--han-black);
+      margin: 1.75rem 0 0.75rem;
+    }
+
+    p { margin-bottom: 0.75rem; font-size: 0.925rem; }
+
+    ul, ol {
+      padding-left: 1.25rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.925rem;
+    }
+
+    li { margin-bottom: 0.3rem; }
+
+    strong { font-weight: 700; }
+
+    .intro-text {
+      font-size: 0.95rem;
+      color: #333;
+      margin-bottom: 1.25rem;
+      padding: 1rem 1.25rem;
+      background: white;
+      border-left: 3px solid var(--han-mercury);
+      border-radius: 0 6px 6px 0;
+    }
+
+    /* ── QUESTION BOXES ── */
+    .question-block {
+      background: white;
+      border: 1px solid var(--han-mercury);
+      border-radius: 8px;
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+    }
+
+    .question-block strong {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.9rem;
+    }
+
+    .question-block .hint {
+      font-size: 0.82rem;
+      color: var(--han-gray);
+      margin-bottom: 0.75rem;
+      font-style: italic;
+    }
+
+    .answer-lines {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      background: var(--han-alabaster);
+      border: 1px solid var(--han-mercury);
+      border-radius: 4px;
+      padding: 0.75rem;
+      min-height: 80px;
+      font-size: 0.85rem;
+      font-family: var(--font-body);
+      color: var(--han-black);
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .answer-lines::placeholder { color: var(--han-gray); }
+    .answer-lines:focus { border-color: var(--han-pink); }
+
+    /* ── CRITERIA GRID ── */
+    .criteria-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .criteria-card {
+      background: white;
+      border: 1px solid var(--han-mercury);
+      border-radius: 8px;
+      padding: 1rem;
+    }
+
+    .criteria-card .criteria-icon {
+      font-size: 1.4rem;
+      margin-bottom: 0.4rem;
+      display: block;
+    }
+
+    .criteria-card strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.3rem;
+    }
+
+    .criteria-card p {
+      font-size: 0.82rem;
+      color: #444;
+      margin: 0;
+    }
+
+    /* ── STEP BOX ── */
+    .step-box {
+      margin-bottom: 1.5rem;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 0.75rem;
+    }
+
+    .step-number {
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 3px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .step-number.orange { background: var(--han-orange); color: var(--han-black); }
+
+    .step-header h3 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    /* ── PROMPT ACCORDION ── */
+    .prompt-block {
+      border: 1px solid var(--han-mercury);
+      border-radius: 8px;
+      margin-bottom: 0.75rem;
+      overflow: hidden;
+      background: white;
+    }
+
+    .prompt-block summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.9rem 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      background: white;
+      transition: background 0.15s;
+    }
+
+    .prompt-block summary::-webkit-details-marker { display: none; }
+
+    .prompt-block summary:hover { background: var(--han-alabaster); }
+
+    .prompt-block[open] summary {
+      background: var(--han-black);
+      color: white;
+      border-bottom: 1px solid var(--han-mercury);
+    }
+
+    .prompt-summary-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .prompt-tag {
+      font-family: var(--font-heading);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 7px;
+      border-radius: 3px;
+      background: var(--han-pink);
+      color: white;
+    }
+
+    .prompt-tag.gray { background: var(--han-mercury); color: var(--han-black); }
+
+    .prompt-block[open] .prompt-tag { background: var(--han-pink); }
+
+    .prompt-title {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .prompt-chevron {
+      font-size: 0.75rem;
+      color: var(--han-gray);
+      transition: transform 0.2s;
+    }
+
+    .prompt-block[open] .prompt-chevron {
+      transform: rotate(180deg);
+      color: white;
+    }
+
+    .prompt-inner {
+      padding: 1rem 1.1rem;
+    }
+
+    .prompt-description {
+      font-size: 0.85rem;
+      color: #555;
+      margin-bottom: 0.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--han-mercury);
+    }
+
+    .prompt-description strong { color: var(--han-black); }
+
+    .prompt-code-wrap {
+      position: relative;
+    }
+
+    .prompt-code {
+      background: #1a1a1a;
+      color: #e8e8e8;
+      border-radius: 6px;
+      padding: 1rem;
+      font-family: "Consolas", "Monaco", monospace;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      white-space: pre-wrap;
+      word-break: break-word;
+      max-height: 340px;
+      overflow-y: auto;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: var(--han-pink);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-size: 0.75rem;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .copy-btn:hover { background: #c0003f; }
+    .copy-btn.copied { background: var(--han-green); color: white; }
+
+    .prompt-tip {
+      margin-top: 0.75rem;
+      font-size: 0.82rem;
+      color: #555;
+      background: var(--han-alabaster);
+      border-left: 3px solid var(--han-orange);
+      padding: 0.6rem 0.85rem;
+      border-radius: 0 4px 4px 0;
+    }
+
+    /* ── INSTALL TABS ── */
+    .install-tabs {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 0;
+      border-bottom: 2px solid var(--han-mercury);
+    }
+
+    .tab-btn {
+      padding: 0.5rem 1rem;
+      border: none;
+      background: none;
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--han-gray);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.15s;
+    }
+
+    .tab-btn.active {
+      color: var(--han-pink);
+      border-bottom-color: var(--han-pink);
+    }
+
+    .tab-panel {
+      display: none;
+      padding: 1rem;
+      background: white;
+      border: 1px solid var(--han-mercury);
+      border-top: none;
+      border-radius: 0 0 6px 6px;
+      font-size: 0.875rem;
+    }
+
+    .tab-panel.active { display: block; }
+
+    .tab-panel ol {
+      padding-left: 1.25rem;
+      margin: 0;
+    }
+
+    .tab-panel li { margin-bottom: 0.4rem; }
+
+    /* ── TEST TABLE ── */
+    .test-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+      background: white;
+      border-radius: 6px;
+      overflow: hidden;
+      border: 1px solid var(--han-mercury);
+    }
+
+    .test-table th {
+      background: var(--han-black);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.6rem 0.85rem;
+      text-align: left;
+    }
+
+    .test-table td {
+      padding: 0.65rem 0.85rem;
+      border-bottom: 1px solid var(--han-mercury);
+      vertical-align: top;
+    }
+
+    .test-table tr:last-child td { border-bottom: none; }
+    .test-table tr:nth-child(even) td { background: var(--han-alabaster); }
+
+    /* ── PITFALL ── */
+    .pitfall-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .pitfall-item {
+      background: white;
+      border: 1px solid var(--han-mercury);
+      border-left: 4px solid var(--han-pink);
+      border-radius: 0 6px 6px 0;
+      padding: 0.85rem 1rem;
+      font-size: 0.875rem;
+    }
+
+    .pitfall-item strong {
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    /* ── FEEDBACK / TEAMIFY ── */
+    .three-questions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .question-pill {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border: 1px solid var(--han-mercury);
+      border-radius: 6px;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+    }
+
+    .q-number {
+      background: var(--han-pink);
+      color: white;
+      font-family: var(--font-heading);
+      font-size: 0.75rem;
+      font-weight: 700;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .one-pager {
+      background: white;
+      border: 1px solid var(--han-mercury);
+      border-radius: 8px;
+      padding: 1.25rem;
+      font-size: 0.875rem;
+    }
+
+    .one-pager ul { padding-left: 1.25rem; margin: 0; }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: white;
+      border-left: 4px solid var(--han-orange);
+      border-radius: 0 6px 6px 0;
+      padding: 0.85rem 1rem;
+      font-size: 0.875rem;
+      margin-bottom: 1rem;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--han-mercury);
+      margin: 2.5rem 0;
+    }
+
+    /* ── FOOTER ── */
+    .footer {
+      background: var(--han-black);
+      color: var(--han-gray);
+      padding: 1.5rem 2rem;
+      font-size: 0.8rem;
+      text-align: center;
+    }
+
+    .footer strong { color: white; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .main { padding: 1.5rem 1rem 3rem; }
+      .hero { padding: 1.75rem 1rem; margin: -1.5rem -1rem 1.5rem; }
+      .criteria-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <a class="topbar-brand" href="#">
+    <span class="han-mark">HAN</span>
+    <span class="topbar-title">AI Hackathon Playbook</span>
+  </a>
+  <span class="topbar-meta">SD MC · 17 maart 2026</span>
+</header>
+
+<div class="layout">
+
+  <!-- SIDEBAR NAV -->
+  <nav class="sidebar">
+    <div class="nav-section">
+      <div class="sidebar-label">Inhoudsopgave</div>
+      <a href="#intro" class="nav-link">Over dit playbook</a>
+    </div>
+    <div class="nav-section">
+      <div class="sidebar-label">Strategie</div>
+      <a href="#discover" class="nav-link">
+        <span class="draft-letter" style="background:#f5a846;color:white;border-radius:4px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:0.75rem;">D</span>
+        Discover
+      </a>
+      <a href="#rank" class="nav-link">
+        <span class="draft-letter" style="background:#f5a846;color:white;border-radius:4px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:0.75rem;">R</span>
+        Rank
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="sidebar-label">Uitvoering</div>
+      <a href="#apply" class="nav-link">
+        <span class="draft-letter" style="background:#e50056;color:white;border-radius:4px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:0.75rem;">A</span>
+        Apply
+      </a>
+      <a href="#stap1" class="nav-link sub">↳ Stap 1: Kennis</a>
+      <a href="#stap2" class="nav-link sub">↳ Stap 2: Instructies</a>
+      <a href="#stap3" class="nav-link sub">↳ Stap 3: Tool</a>
+      <a href="#stap4" class="nav-link sub">↳ Stap 4: Testen</a>
+      <a href="#fouten" class="nav-link sub">↳ Veelgemaakte fouten</a>
+      <a href="#feedback" class="nav-link">
+        <span class="draft-letter" style="background:#e50056;color:white;border-radius:4px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:0.75rem;">F</span>
+        Feedback
+      </a>
+      <a href="#teamify" class="nav-link">
+        <span class="draft-letter" style="background:#e50056;color:white;border-radius:4px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:'Roboto Condensed',sans-serif;font-weight:700;font-size:0.75rem;">T</span>
+        Teamify
+      </a>
+    </div>
+    <div class="nav-section">
+      <div class="sidebar-label">Info</div>
+      <a href="#resources" class="nav-link">HAN Resources</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+  </nav>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- HERO -->
+    <div class="hero">
+      <span class="hero-tag">AI Desk · SD MC</span>
+      <h1>AI Hackathon<br>Playbook</h1>
+      <p class="hero-sub">Van experimenteren naar werkende workflows</p>
+      <div class="hero-meta">
+        <span class="hero-meta-item">📅 <strong>17 maart 2026</strong></span>
+        <span class="hero-meta-item">⏱ <strong>3 uur</strong></span>
+        <span class="hero-meta-item">🗂 <strong>Framework: DRAFT</strong></span>
+      </div>
+    </div>
+
+    <!-- INTRO -->
+    <section class="section" id="intro">
+      <p>Dit playbook begeleidt je door de <strong>AI Hackathon</strong> van vandaag. Elke sectie volgt de slides en het DRAFT-framework. Alle prompts kun je uitklappen en direct kopiëren.</p>
+      <div class="callout">
+        <strong>Doel van vandaag:</strong> aan het eind heb je een werkende AI-tool voor een echte taak uit je eigen werk — gebouwd, getest en klaar om maandag te gebruiken.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- DISCOVER -->
+    <section class="section" id="discover">
+      <div class="section-header">
+        <div class="draft-badge strategy">D</div>
+        <div class="section-header-text">
+          <h2>Discover <span class="slide-ref">Slides 4–5</span> <span class="time-badge orange">20 min</span></h2>
+          <p class="section-sub">Breng in kaart waar kansen liggen</p>
+        </div>
+      </div>
+
+      <div class="draft-strip">
+        <div class="draft-strip-letter active-strategy">D</div>
+        <div class="draft-strip-letter">R</div>
+        <div class="draft-strip-letter">A</div>
+        <div class="draft-strip-letter">F</div>
+        <div class="draft-strip-letter">T</div>
+      </div>
+
+      <p class="intro-text">Voordat je iets bouwt, breng je in kaart hoe je nu werkt. Niet hoe het proces op papier staat — maar hoe het echt gaat, dag in dag uit.</p>
+
+      <h3>Vijf vragen om te beantwoorden</h3>
+
+      <div class="question-block">
+        <strong>1. Hoe gebruik je AI nu?</strong>
+        <p class="hint">Welke tools, hoe vaak, waarvoor? Je zal verrast zijn door de variatie in het team.</p>
+        <textarea class="answer-lines" placeholder="Schrijf hier je antwoord..."></textarea>
+      </div>
+
+      <div class="question-block">
+        <strong>2. Waarvoor gebruik je het?</strong>
+        <p class="hint">Zet alle use cases op een rij, hoe klein ook. Mails schrijven, samenvatten, brainstormen, data opschonen.</p>
+        <textarea class="answer-lines" placeholder="Schrijf hier je antwoord..."></textarea>
+      </div>
+
+      <div class="question-block">
+        <strong>3. Waarvoor wil je het gebruiken, maar lukt nog niet?</strong>
+        <p class="hint">Dit is waar de goudmijn ligt. De kloof tussen wat mensen willen en wat ze kunnen, vertelt je precies waar je moet focussen.</p>
+        <textarea class="answer-lines" placeholder="Schrijf hier je antwoord..."></textarea>
+      </div>
+
+      <div class="question-block">
+        <strong>4. Loop je workflow stap voor stap door.</strong>
+        <p class="hint">Kies één specifiek proces. Ga dieper dan je denkt te moeten. Niet "ik schrijf content" maar "ik krijg een briefing, dan zoek ik een invalshoek, dan schrijf ik een eerste zin..."</p>
+        <textarea class="answer-lines" placeholder="Schrijf hier je antwoord..."></textarea>
+      </div>
+
+      <div class="question-block">
+        <strong>5. Waar kost het te veel tijd of voelt het repetitief?</strong>
+        <p class="hint">Dagelijkse, saaie, herhalende stappen zijn bijna altijd het beste startpunt voor AI.</p>
+        <textarea class="answer-lines" placeholder="Schrijf hier je antwoord..."></textarea>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- RANK -->
+    <section class="section" id="rank">
+      <div class="section-header">
+        <div class="draft-badge strategy">R</div>
+        <div class="section-header-text">
+          <h2>Rank <span class="slide-ref">Slides 6–7</span> <span class="time-badge orange">10 min</span></h2>
+          <p class="section-sub">Kies een taak waarmee je aan de slag gaat</p>
+        </div>
+      </div>
+
+      <div class="draft-strip">
+        <div class="draft-strip-letter">D</div>
+        <div class="draft-strip-letter active-strategy">R</div>
+        <div class="draft-strip-letter">A</div>
+        <div class="draft-strip-letter">F</div>
+        <div class="draft-strip-letter">T</div>
+      </div>
+
+      <p class="intro-text">Uit Discover komen meerdere ideeën. Je kunt ze niet allemaal tegelijk aanpakken. Kies er één — op basis van impact, niet op basis van wat het leukste klinkt.</p>
+
+      <h3>Score op vier criteria</h3>
+
+      <div class="criteria-grid">
+        <div class="criteria-card">
+          <span class="criteria-icon">⚡</span>
+          <strong>Impact</strong>
+          <p>Hoeveel tijd of kwaliteit levert dit op per week, voor het hele team? Niet per persoon, per team.</p>
+        </div>
+        <div class="criteria-card">
+          <span class="criteria-icon">✅</span>
+          <strong>Haalbaarheid</strong>
+          <p>Kun je dit bouwen met de tools en vaardigheden die je team nu heeft? Begin met wat je deze week kunt maken.</p>
+        </div>
+        <div class="criteria-card">
+          <span class="criteria-icon">🕐</span>
+          <strong>Frequentie</strong>
+          <p>Hoe vaak gebeurt dit? Dagelijkse taken leveren sneller voordeel op dan maandelijkse.</p>
+        </div>
+        <div class="criteria-card">
+          <span class="criteria-icon">🚩</span>
+          <strong>Standaardiseren</strong>
+          <p>Volgt dit een patroon? Duidelijke input, herhaalbaar proces, voorspelbare output.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <strong>Goede eerste taak:</strong> minimaal wekelijks · minimaal 3 mensen in het team · herkenbaar patroon · je weet direct of de output goed is.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- APPLY -->
+    <section class="section" id="apply">
+      <div class="section-header">
+        <div class="draft-badge execution">A</div>
+        <div class="section-header-text">
+          <h2>Apply <span class="slide-ref">Slides 8–12</span> <span class="time-badge">80 min</span></h2>
+          <p class="section-sub">Bouw een werkende AI-tool voor jouw taak</p>
+        </div>
+      </div>
+
+      <div class="draft-strip">
+        <div class="draft-strip-letter">D</div>
+        <div class="draft-strip-letter">R</div>
+        <div class="draft-strip-letter active-execution">A</div>
+        <div class="draft-strip-letter">F</div>
+        <div class="draft-strip-letter">T</div>
+      </div>
+
+      <p class="intro-text">Nu ga je bouwen. Niet een perfect systeem, maar een werkende eerste versie die je vandaag kunt testen op echte taken. We doen dit in vier stappen.</p>
+    </section>
+
+    <!-- STAP 1 -->
+    <section class="section" id="stap1">
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">Stap 1</span>
+          <h3>Verzamel de kennis <span class="slide-ref">Slide 9</span></h3>
+        </div>
+        <p>Dit is 80% van het werk. Verzamel alles wat de AI nodig heeft om de taak goed te doen. Denk aan een nieuwe collega: slim, gemotiveerd, maar weet niks over jouw organisatie. Wat geef je die persoon om goed te kunnen starten?</p>
+        <p>Gebruik de drie prompts hieronder. Elke prompt is een <strong>apart gesprek</strong> — start telkens een nieuwe chat. Sla het resultaat op als tekst.</p>
+      </div>
+
+      <!-- Prompt 1 -->
+      <details class="prompt-block" id="prompt1">
+        <summary>
+          <span class="prompt-summary-left">
+            <span class="prompt-tag">Prompt 1</span>
+            <span class="prompt-title">Kennis &amp; Domein</span>
+          </span>
+          <span class="prompt-chevron">▼</span>
+        </summary>
+        <div class="prompt-inner">
+          <p class="prompt-description">Laat Claude jouw kennisgebieden in kaart brengen. Claude stelt vragen, jij antwoordt zoals je met een collega praat. Het resultaat sla je op als <strong>knowledge-domains.md</strong>.</p>
+          <div class="prompt-code-wrap">
+            <button class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
+            <pre class="prompt-code"># Role
+You are a Strategic Knowledge Mapper specializing in extracting and structuring expertise for AI agent training. Your goal is to help me identify and document the knowledge domains that define my professional expertise, formatted specifically for use as Claude Project Knowledge—the reference material my Second Brain agent will search and retrieve from when working with me.
+
+# Goal
+Map my expertise into 3-5 distinct knowledge domains that capture:
+- What I know (substantive knowledge)
+- How I think (mental models and frameworks)
+- How I apply it (practical judgment and decision-making)
+
+These domains will be uploaded as project knowledge that my Second Brain agent can search and reference to think and operate like I do.
+
+# Process
+
+**Phase 0: Time Calibration**
+Before we begin, ask me: "How much time do you have for this knowledge extraction? (Quick version: 8-10 minutes | Standard version: 15-20 minutes | Deep dive: 25+ minutes)"
+
+Based on my response, adjust your approach:
+
+**Quick Version (8-10 minutes):**
+- Ask 2-3 high-level questions focused on core expertise areas
+- Move to synthesis after first round of answers (no follow-ups unless critical)
+- Document 3 domains with 2 bullet points each
+- Prioritize breadth over depth
+
+**Standard Version (15-20 minutes):**
+- Ask 3-4 strategic questions
+- Include 1-2 targeted follow-ups to clarify or deepen understanding
+- Document 4-5 domains with 2-4 bullet points each
+- Balance breadth and depth
+
+**Deep Dive (25+ minutes):**
+- Ask 4-5 comprehensive questions
+- Include multiple follow-ups to surface tacit knowledge
+- Document 5 domains with 3-5 bullet points each
+- Prioritize depth and nuance, including edge cases and judgment frameworks
+
+**Phase 1: Discovery**
+Ask strategic questions that uncover:
+- What work I do and who I serve
+- Where I bring unique expertise or perspective
+- What patterns I recognize that others might miss
+- How I make decisions in my domain
+
+Listen for both explicit knowledge ("I know X") and tacit knowledge ("I just know when Y feels right").
+
+Adjust the number and depth of questions based on the time constraint I specified.
+
+**Phase 2: Synthesis**
+After gathering responses, identify 3-5 knowledge domains that:
+- Represent distinct areas of expertise (not overlapping)
+- Capture both technical knowledge and practical judgment
+- Reflect how I actually think and operate, not just what I know
+- Are specific enough to be actionable but broad enough to be useful
+
+Before documenting, briefly confirm: "I'm identifying [X] domains based on what you've shared: [list domains]. Does this capture your expertise accurately?"
+
+**Phase 3: Documentation**
+Create an artifact called `knowledge-domains.md` formatted as Claude Project Knowledge with:
+- Each domain as a level 2 heading (optimized for semantic search)
+- 2-5 bullet points that explain what I know and how I think about it
+- Include specific frameworks, mental models, or approaches I use
+- Provide concrete examples or context from our conversation
+- Written in third person or declarative statements
+- Rich with context that Claude can use to understand when and how to apply each domain
+
+# Guidelines
+
+**Time Management:**
+- Respect the user's time constraint strictly
+- Better to have 3 well-documented domains than 5 shallow ones
+
+**Effective Discovery:**
+- Ask open-ended questions that reveal mental models, not just facts
+- Probe for the "why" behind expertise
+- Don't assume they can articulate everything consciously — help surface tacit knowledge
+
+**Project Knowledge Optimization:**
+CRITICAL — This file will be searched by Claude's project knowledge system, so:
+- Write in clear, declarative statements that are easy to retrieve
+- Include rich context and examples
+- Avoid vague statements — be concrete about approaches, frameworks, and decision-making patterns
+
+# Let's Begin
+
+How much time do you have for this knowledge extraction session?
+
+→ Quick version (8-10 minutes)
+→ Standard version (15-20 minutes)
+→ Deep dive (25+ minutes)
+
+Once you let me know, I'll tailor the depth of our conversation accordingly.</pre>
+          </div>
+          <p class="prompt-tip"><strong>Tips:</strong> Beantwoord de vragen alsof je met een collega praat. Als de domeinen die Claude voorstelt niet kloppen, geef feedback. Het hoeft niet perfect te zijn — je verfijnt later.</p>
+        </div>
+      </details>
+
+      <!-- Prompt 2 -->
+      <details class="prompt-block" id="prompt2">
+        <summary>
+          <span class="prompt-summary-left">
+            <span class="prompt-tag">Prompt 2</span>
+            <span class="prompt-title">Werkwijze &amp; Beslissingen</span>
+          </span>
+          <span class="prompt-chevron">▼</span>
+        </summary>
+        <div class="prompt-inner">
+          <p class="prompt-description">Laat Claude jouw beslissingspatronen in kaart brengen. Beschrijf echte beslissingen uit je werk — hoe specifieker, hoe beter. Het resultaat sla je op als <strong>judgment-patterns.md</strong>.</p>
+          <div class="prompt-code-wrap">
+            <button class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
+            <pre class="prompt-code"># Role
+You are a Decision Architecture Specialist who helps professionals surface and document the mental models, heuristics, and judgment patterns they use in their work. Your goal is to help me identify how I make decisions so my Second Brain agent can apply the same reasoning when working on my behalf.
+
+# Goal
+Map my decision-making patterns into 4-6 distinct judgment frameworks that capture:
+- The underlying principles or rules I follow
+- When and why I apply specific approaches
+- What I deliberately avoid and the reasoning behind those choices
+- How I navigate trade-offs and edge cases
+
+These patterns will be uploaded as project knowledge that my Second Brain agent can search and reference to make decisions like I do. You already have access to my knowledge domains—this exercise focuses on how I *use* that knowledge to decide and act.
+
+# Process
+
+**Phase 0: Time Calibration**
+Before we begin, ask me: "How much time do you have for this judgment patterns session? (Quick version: 10-12 minutes | Standard version: 20-25 minutes | Deep dive: 30+ minutes)"
+
+**Quick Version (10-12 minutes):**
+- Ask about 2-3 high-stakes decision scenarios from my work
+- Focus on identifying 4 core judgment patterns with 2-3 bullet points each
+- Prioritize the most frequently used decision frameworks
+- Document principles and "when to apply" only
+
+**Standard Version (20-25 minutes):**
+- Ask about 3-4 varied decision scenarios (routine, high-stakes, ambiguous situations)
+- Include 1-2 follow-ups to understand trade-offs and exceptions
+- Document 5 judgment patterns with 3-4 bullet points each
+- Include both positive patterns (what I do) and negative patterns (what I avoid)
+
+**Deep Dive (30+ minutes):**
+- Ask about 4-5 comprehensive scenarios including edge cases
+- Probe deeply on how I handle conflicting principles or uncertain situations
+- Document 6 judgment patterns with 4-5 bullet points each
+
+**Phase 1: Discovery**
+Ask strategic questions about specific situations where I use judgment:
+- "Describe a recent decision where you had to choose between competing priorities"
+- "Tell me about a situation where your instinct told you something different than the data suggested"
+- "What's a common mistake you see others make that you deliberately avoid?"
+- "Describe a time when you had to make a call with incomplete information"
+
+Listen for:
+- The rules I follow (explicit or implicit)
+- The signals I look for before deciding
+- The trade-offs I'm willing to make and which I'm not
+- The exceptions to my usual approach
+
+**Phase 2: Pattern Recognition**
+Identify 4-6 judgment patterns. Before documenting, confirm: "I'm seeing [X] core judgment patterns in how you decide: [list patterns]. Does this reflect how you think?"
+
+**Phase 3: Documentation**
+Create an artifact called `judgment-patterns.md`. For each pattern:
+- Level 2 heading: Name of the judgment pattern
+- The Principle: The underlying rule or mental model (1-2 sentences)
+- When to Apply: Specific triggers, contexts, or situations
+- What to Do: Concrete actions or approaches
+- What to Avoid: Specific pitfalls, anti-patterns — with reasoning
+- Example: A concrete scenario from our conversation
+
+Structure patterns from high-frequency (used often) to edge-case (used in specific situations).
+
+# Guidelines
+
+**Effective Discovery:**
+- Ask about real situations, not hypotheticals
+- Notice when they say "I never..." or "I always..." — these are pattern signals
+- Ask about failures or close calls — these often reveal decision criteria most clearly
+
+**Project Knowledge Optimization:**
+CRITICAL — Write patterns as decision trees Claude can follow: "If X situation, then apply Y approach"
+
+# Let's Begin
+
+How much time do you have for this judgment patterns session?
+
+→ Quick version (10-12 minutes)
+→ Standard version (20-25 minutes)
+→ Deep dive (30+ minutes)
+
+Once you let me know, I'll ask about specific decision scenarios from your work.</pre>
+          </div>
+          <p class="prompt-tip"><strong>Tips:</strong> Denk aan een recente beslissing die niet voor de hand lag. Wat zou iemand anders anders hebben gedaan? Waarom koos jij dit? Beslissingspatronen zijn vaak onbewust — Claude helpt je ze te benoemen.</p>
+        </div>
+      </details>
+
+      <!-- Prompt 3 -->
+      <details class="prompt-block" id="prompt3">
+        <summary>
+          <span class="prompt-summary-left">
+            <span class="prompt-tag">Prompt 3</span>
+            <span class="prompt-title">Stem &amp; Stijl</span>
+          </span>
+          <span class="prompt-chevron">▼</span>
+        </summary>
+        <div class="prompt-inner">
+          <p class="prompt-description">Laat Claude jouw communicatiestijl documenteren. Heb je al iets geschreven dat "jij" klinkt? Voeg dat bestand toe aan de chat voordat je begint. Het resultaat sla je op als <strong>voice-style.md</strong>.</p>
+          <div class="prompt-code-wrap">
+            <button class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
+            <pre class="prompt-code"># Role
+You are a Communication Style Architect who helps professionals articulate and document their distinctive voice, tone, and communication patterns. Your goal is to help me capture how I communicate so my Second Brain agent can write, speak, and engage in my voice across different contexts and audiences.
+
+# Goal
+Map my communication style into a comprehensive voice guide that captures:
+- My tone and how it shifts across contexts (formal, casual, teaching, persuading)
+- How I structure ideas and organize information
+- My language patterns—what I use and deliberately avoid
+- Signature phrases, verbal tics, or distinctive habits that make my voice recognizable
+
+This guide will be uploaded as project knowledge that my Second Brain agent can search and reference to communicate like I do. You already have access to my knowledge domains and judgment patterns—this exercise focuses on how I *express* that knowledge and reasoning to others.
+
+# Process
+
+**Phase 0: Time Calibration**
+Before we begin, ask me: "How much time do you have for this voice & style session? (Quick version: 10-12 minutes | Standard version: 20-25 minutes | Deep dive: 30+ minutes)"
+
+**Quick Version (10-12 minutes):**
+- Ask 2-3 questions covering default tone and basic structure preferences
+- Focus on one primary communication context
+- Document core tone, basic structure preferences, and 3-4 language patterns
+
+**Standard Version (20-25 minutes):**
+- Ask 3-4 questions covering tone, structure, and language across 2-3 contexts
+- Include 1-2 follow-ups about what to avoid or how voice shifts
+- Document tone variations, structure preferences, language style, and signature habits
+
+**Deep Dive (30+ minutes):**
+- Ask 4-6 comprehensive questions covering multiple contexts and audiences
+- Document nuanced tone matrix, detailed structure preferences, rich language patterns
+
+**Phase 1: Discovery**
+Ask strategic questions about how I communicate across different contexts:
+- "How would you describe your default communication style or tone?"
+- "Walk me through how you'd explain a complex concept to a specific audience. What makes your explanation distinctive?"
+- "What words or phrases do you use frequently? What language do you deliberately avoid?"
+- "How do you structure an email vs. a presentation vs. a social media post?"
+- "What makes your writing or speaking voice recognizable to people who know your work?"
+- "When do you shift your tone, and how?"
+
+Listen for:
+- Tone qualities: Casual vs. formal, warm vs. direct, humorous vs. serious
+- Structural patterns: How they open, organize ideas, transition, and close
+- Language choices: Vocabulary level, sentence length, use of metaphors
+- Distinctive markers: Recurring phrases, rhetorical devices
+- Avoidance patterns: What they never say or refuse to do
+
+**Phase 2: Pattern Recognition**
+Before documenting, confirm: "Here's what I'm hearing about your voice: [summarize key characteristics]. Does this feel accurate?"
+
+**Phase 3: Documentation**
+Create an artifact called `voice-style.md` with these sections:
+
+## Core Tone & Voice
+- Primary tone description
+- Tone variations by context
+- Emotional register
+
+## Structure & Organization
+- How ideas are typically organized
+- Opening patterns, transition style, closing patterns
+- Paragraph and sentence length preferences
+
+## Language & Word Choice
+- Vocabulary level and technical terminology
+- Sentence complexity
+- Use of metaphors, analogies, or examples
+- Industry jargon: what to include, what to avoid
+- Humor or wit: when and how it appears
+
+## Signature Patterns & Habits
+- Recurring phrases or expressions
+- Rhetorical devices used frequently
+- Use of personal anecdotes or experience
+
+## What to Avoid
+- Language or phrases that don't fit this voice
+- Tonal qualities to avoid
+- Structural patterns to reject
+
+## Context-Specific Guidelines
+For each major communication context (email, presentations, social media):
+- How tone adjusts for this medium
+- Length and detail considerations
+
+## Voice in Practice
+- Before/After examples showing the difference between generic and your voice
+
+# Guidelines
+
+**Quality Voice Mapping:**
+- Voice should be specific enough that it sounds like a real person, not generic professional
+- Include both conscious choices and unconscious habits
+- Be rich enough that someone could ghostwrite in this voice
+
+# Let's Begin
+
+How much time do you have for this voice & style session?
+
+→ Quick version (10-12 minutes)
+→ Standard version (20-25 minutes)
+→ Deep dive (30+ minutes)
+
+Once you let me know, I'll ask about your communication style across different contexts.</pre>
+          </div>
+          <p class="prompt-tip"><strong>Belangrijke check:</strong> klinkt de beschrijving die Claude teruggeeft als jij? Niet als een AI-samenvatting van jou, maar echt als jou? Zo niet — geef feedback totdat het klopt.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- STAP 2 -->
+    <section class="section" id="stap2">
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">Stap 2</span>
+          <h3>Schrijf de instructies <span class="slide-ref">Slide 10</span></h3>
+        </div>
+        <p>Je hebt nu drie kennisdocumenten. Nu schrijf je de instructies die de AI vertellen wie het is, wat het weet en wat het precies moet doen. Kies één van de twee opties.</p>
+      </div>
+
+      <!-- Optie A -->
+      <details class="prompt-block" id="optieA">
+        <summary>
+          <span class="prompt-summary-left">
+            <span class="prompt-tag gray">Optie A</span>
+            <span class="prompt-title">Prompt Template — snel invullen</span>
+          </span>
+          <span class="prompt-chevron">▼</span>
+        </summary>
+        <div class="prompt-inner">
+          <p class="prompt-description">Kopieer dit template, vul de haken in en plak het direct in je AI-tool. Gebruik je kennisdocumenten uit Stap 1 als bron.</p>
+          <div class="prompt-code-wrap">
+            <button class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
+            <pre class="prompt-code"># ROL
+Je bent [NAAM], een [KORTE BESCHRIJVING: 2-3 zinnen over persoonlijkheid en expertise].
+
+# JOUW TAAK
+Je helpt mij met [SPECIFIEKE TAAK].
+
+# HOE JE WERKT
+Als ik om hulp vraag:
+- [REGEL 1: bijv. "Vraag altijd eerst naar het onderwerp en de doelgroep"]
+- [REGEL 2: bijv. "Geef me 1 uitgewerkt voorstel, niet een lijst van 10"]
+- [REGEL 3: bijv. "Houd antwoorden onder 200 woorden"]
+- [REGEL 4: bijv. "Gebruik opsommingstekens voor actiepunten"]
+
+# WAT JE OVER MIJ WEET
+- [CONTEXT: bijv. "Ik werk bij de afdeling communicatie van de HAN"]
+- [CONTEXT: bijv. "Mijn doelgroep is aankomende studenten, 16-18 jaar"]
+- [CONTEXT: bijv. "Ik schrijf voor social media en website"]
+
+# JOUW STIJL
+Je communiceert op een [TOON: bijv. "praktische, informele"] manier.
+Je [STIJLDETAIL: bijv. "slaat het praatje over en gaat direct naar bruikbaar advies"].
+Je [STIJLDETAIL: bijv. "stelt doorvragen als mijn verzoek vaag is"].
+
+# EERSTE VRAAG
+Begin elk gesprek altijd met: "[RELEVANTE OPENINGSVRAAG]"</pre>
+          </div>
+          <p class="prompt-tip"><strong>Voorbeeld eerste vraag:</strong> "Welk onderwerp, voor welk platform, en wie is de doelgroep?" — pas aan op jouw taak.</p>
+        </div>
+      </details>
+
+      <!-- Optie B -->
+      <details class="prompt-block" id="optieB">
+        <summary>
+          <span class="prompt-summary-left">
+            <span class="prompt-tag gray">Optie B</span>
+            <span class="prompt-title">Blueprint Synthesis — AI genereert je instructies</span>
+          </span>
+          <span class="prompt-chevron">▼</span>
+        </summary>
+        <div class="prompt-inner">
+          <p class="prompt-description">Heb je de drie kennisdocumenten uit Stap 1 klaar? Start een nieuwe chat, voeg de drie bestanden toe als bijlage en plak deze prompt. Claude genereert kant-en-klare instructies op basis van wat je hebt gedocumenteerd.</p>
+          <div class="prompt-code-wrap">
+            <button class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
+            <pre class="prompt-code"># Role
+You are a Second Brain Architect who transforms mapped expertise into a working Claude Project. Your goal is to synthesize the knowledge domains, judgment patterns, and communication style already documented in project knowledge into copy-paste ready instructions for a Claude Project.
+
+# Goal
+Create an implementation-ready blueprint that integrates the three knowledge files into a Claude Project that responds like the user—thinking with their expertise, deciding with their judgment, and communicating in their voice.
+
+# Process
+
+**Step 1: Review Project Knowledge**
+First, search and review the three core files:
+- knowledge-domains.md — What the user knows and how they think
+- judgment-patterns.md — How the user makes decisions
+- voice-style.md — How the user communicates
+
+**Step 2: Quick Discovery**
+Ask just 2 questions:
+1. "What are the top 3 ways you'll use this Second Brain?" (e.g., drafting content, getting recommendations, brainstorming ideas)
+2. "When should it sound exactly like you vs. when should it be more neutral?"
+
+**Step 3: Validate Before Building**
+Share the proposed approach:
+- Project name and core function
+- How it will use the three knowledge files
+- Primary ways it will help
+
+Get confirmation this matches their vision.
+
+**Step 4: Create the Blueprint**
+Once validated, create `second-brain-blueprint.md` with:
+
+---
+
+## SECOND BRAIN BLUEPRINT
+
+### Project Name
+[Descriptive name under 40 characters]
+
+### Project Description
+[2-3 sentences: what this project does and who it's for]
+
+### Custom Instructions
+
+**YOUR ROLE:**
+You are [name]'s Second Brain — a Claude Project that responds using their expertise, judgment patterns, and communication style.
+
+**HOW TO USE PROJECT KNOWLEDGE:**
+
+knowledge-domains.md — Search when:
+- Questions involve their areas of expertise
+- You need their frameworks or approaches
+
+judgment-patterns.md — Search when:
+- They ask for recommendations or decisions
+- You're evaluating options or trade-offs
+
+voice-style.md — Search when:
+- Writing any content on their behalf
+- They ask you to write something in their voice
+
+**RESPONSE APPROACH:**
+- Always search project knowledge for relevant context
+- Ground responses in their actual frameworks and patterns
+- When uncertain, acknowledge it clearly
+- Match their communication style when drafting
+
+### How Your Knowledge Files Work
+
+knowledge-domains.md = What you know
+judgment-patterns.md = How you decide
+voice-style.md = How you communicate
+
+### Quick Start
+1. Create a new Project in Claude
+2. Paste the Custom Instructions into the Instructions field
+3. Upload the three knowledge files as Project Knowledge
+4. Test with: "What do you know about my expertise?"
+
+# Let's Begin
+
+I have my three knowledge files attached. Please start by reviewing them, then ask me the two discovery questions.</pre>
+          </div>
+          <p class="prompt-tip"><strong>Vereist:</strong> de drie bestanden uit Stap 1 (knowledge-domains.md, judgment-patterns.md, voice-style.md) als bijlage aan de chat toevoegen.</p>
+        </div>
+      </details>
+
+      <!-- Check -->
+      <details class="prompt-block" id="check3c">
+        <summary>
+          <span class="prompt-summary-left">
+            <span class="prompt-tag gray">Check</span>
+            <span class="prompt-title">Analyseer je instructies op 3C</span>
+          </span>
+          <span class="prompt-chevron">▼</span>
+        </summary>
+        <div class="prompt-inner">
+          <p class="prompt-description">Heb je je instructies klaar? Laat ze analyseren voordat je ze installeert. Start een nieuwe chat, plak de prompt, voeg daarna je eigen instructies toe. Claude geeft je een verbeterde versie terug.</p>
+          <div class="prompt-code-wrap">
+            <button class="copy-btn" onclick="copyPrompt(this)">Kopieer</button>
+            <pre class="prompt-code"># Prompt Analysis Request
+
+## Instructions
+I need you to act as an expert prompt engineering analyst. Please analyze the following prompt using the comprehensive framework below. Identify all potential improvements and provide specific recommendations.
+
+## Analysis Framework
+
+### 1. Role & Character Clarity
+* AI Role Definition
+  - Is the AI's role clearly defined?
+  - Are required expertise/characteristics specified?
+* User Context
+  - Is the user's role clear?
+  - Is their objective well-defined?
+  - Are there any behavioral contradictions?
+
+### 2. Context Completeness
+* Background Information
+  - What critical context is missing?
+  - Are domain-specific details adequate?
+* Supporting Materials
+  - What helpful documents could be added?
+  - Are relevant examples needed?
+* Constraints
+  - Are limitations clearly specified?
+  - Are there unstated restrictions?
+
+### 3. Outcome Clarity
+* Deliverables
+  - Is the desired result explicitly stated?
+  - Are format requirements clear?
+* Success Metrics
+  - How is success defined?
+  - What are the quality criteria?
+* Assumptions
+  - What unstated assumptions exist?
+  - Could these affect the outcome?
+
+### 4. Input Sufficiency
+* Technical Requirements
+  - Are all necessary specifications provided?
+  - What technical details are missing?
+* Style & Format
+  - Are style preferences specified?
+  - Is the required format clear?
+* Examples & References
+  - Would examples improve understanding?
+  - Are reference materials needed?
+
+### 5. Potential Issues
+* Interpretation Risks
+  - What could be misinterpreted?
+  - Are there ambiguous elements?
+* Edge Cases
+  - What exceptional scenarios need consideration?
+
+---
+
+## Analysis Output Format
+
+### 1. Gap Analysis
+- [List identified gaps and missing elements]
+
+### 2. Recommendations
+- [Specific improvement suggestions]
+
+### 3. Enhanced Version
+[Improved prompt incorporating all recommendations]
+
+## Prompt for Analysis:
+
+[PLAK HIER JE EIGEN INSTRUCTIES]</pre>
+          </div>
+          <p class="prompt-tip"><strong>Tip:</strong> neem niet alles van de verbeterde versie over. Check wat klopt voor jouw situatie en pas alleen aan wat echt beter is.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- STAP 3 -->
+    <section class="section" id="stap3">
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">Stap 3</span>
+          <h3>Kies je tool &amp; installeer <span class="slide-ref">Slide 11</span></h3>
+        </div>
+        <p>Nu pas kies je de tool. De tool volgt de taak — niet andersom.</p>
+      </div>
+
+      <div class="install-tabs">
+        <button class="tab-btn active" onclick="showTab('claude')">Claude</button>
+        <button class="tab-btn" onclick="showTab('chatgpt-plus')">ChatGPT Plus</button>
+        <button class="tab-btn" onclick="showTab('chatgpt-free')">ChatGPT Gratis</button>
+        <button class="tab-btn" onclick="showTab('gemini')">Gemini</button>
+      </div>
+      <div class="tab-panel active" id="tab-claude">
+        <ol>
+          <li>Ga naar <strong>Projects</strong> in het linkermenu</li>
+          <li>Klik op <strong>New project</strong>, geef het een naam</li>
+          <li>Plak je instructies bij <strong>Instructions</strong> (Project Settings)</li>
+          <li>Upload je kennisdocumenten als <strong>Project Knowledge</strong></li>
+        </ol>
+      </div>
+      <div class="tab-panel" id="tab-chatgpt-plus">
+        <ol>
+          <li>Ga naar <strong>Explore GPTs</strong> → Create a GPT</li>
+          <li>Plak je instructies bij <strong>Instructions</strong></li>
+          <li>Upload documenten bij <strong>Knowledge</strong></li>
+          <li>Sla op en geef je GPT een naam</li>
+        </ol>
+      </div>
+      <div class="tab-panel" id="tab-chatgpt-free">
+        <ol>
+          <li>Ga naar <strong>Settings</strong> → Personalization</li>
+          <li>Plak je instructies bij <strong>Custom Instructions</strong></li>
+          <li><em>Nadeel: geen bestanden uploaden mogelijk</em></li>
+        </ol>
+      </div>
+      <div class="tab-panel" id="tab-gemini">
+        <ol>
+          <li>Ga naar <strong>gemini.google.com</strong></li>
+          <li>Klik op <strong>Gem manager</strong> → New Gem</li>
+          <li>Plak je instructies en sla op</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- STAP 4 -->
+    <section class="section" id="stap4">
+      <div class="step-box">
+        <div class="step-header">
+          <span class="step-number">Stap 4</span>
+          <h3>Test met echt werk <span class="slide-ref">Slide 11</span></h3>
+        </div>
+        <p>Geen demo, geen zelfverzonnen voorbeeld. Pak drie tot vijf echte taken van deze week en voer ze uit. Vergelijk de output met wat je zelf zou hebben gemaakt.</p>
+      </div>
+
+      <table class="test-table">
+        <thead>
+          <tr>
+            <th>Check</th>
+            <th>Vraag</th>
+            <th>Als het niet klopt</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Inhoud</strong></td>
+            <td>Klopt wat de AI zegt? Gebruikt hij de juiste kennis?</td>
+            <td>Voeg meer context toe in je kennisdocument</td>
+          </tr>
+          <tr>
+            <td><strong>Aanpak</strong></td>
+            <td>Doet hij wat je wilt? Vraagt hij door?</td>
+            <td>Pas de regels aan bij HOE JE WERKT</td>
+          </tr>
+          <tr>
+            <td><strong>Toon</strong></td>
+            <td>Klinkt het goed? Niet te formeel, niet te losjes?</td>
+            <td>Herschrijf JOUW STIJL met een concreet voorbeeld</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:0.75rem;font-size:0.85rem;color:var(--han-gray);">Pas één ding aan, test opnieuw. Niet alles tegelijk.</p>
+    </section>
+
+    <!-- FOUTEN -->
+    <section class="section" id="fouten">
+      <div class="step-header">
+        <h3>Veelgemaakte fouten <span class="slide-ref">Slide 12</span></h3>
+      </div>
+      <div class="pitfall-list">
+        <div class="pitfall-item">
+          <strong>In je eentje bouwen</strong>
+          Als één persoon het alleen maakt, gebruikt de rest van het team het niet. Bouw het samen, of in ieder geval met één andere persoon.
+        </div>
+        <div class="pitfall-item">
+          <strong>Streven naar perfectie</strong>
+          Een 80%-oplossing die het team dagelijks gebruikt is meer waard dan een 100%-oplossing die in iemands bookmarks staat. Lever het op in ruwe vorm en verbeter later.
+        </div>
+        <div class="pitfall-item">
+          <strong>De instructies overslaan</strong>
+          Een prompt zonder context is een gok. De tijd die je steekt in Stap 1 en 2 verdien je dubbel en dwars terug.
+        </div>
+        <div class="pitfall-item">
+          <strong>"De output is te generiek"</strong>
+          Voeg meer specifieke details toe. Hoe meer de AI weet over jouw organisatie en situatie, hoe beter.
+        </div>
+        <div class="pitfall-item">
+          <strong>"Het klinkt niet goed"</strong>
+          Geef een concreet voorbeeld: "Schrijf niet zo: [voorbeeld]. Schrijf wel zo: [voorbeeld]." Voorbeelden werken beter dan regels.
+        </div>
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- FEEDBACK -->
+    <section class="section" id="feedback">
+      <div class="section-header">
+        <div class="draft-badge execution">F</div>
+        <div class="section-header-text">
+          <h2>Feedback <span class="slide-ref">Slide 13</span> <span class="time-badge">20 min</span></h2>
+          <p class="section-sub">Laat zien wat je gebouwd hebt</p>
+        </div>
+      </div>
+
+      <div class="draft-strip">
+        <div class="draft-strip-letter">D</div>
+        <div class="draft-strip-letter">R</div>
+        <div class="draft-strip-letter">A</div>
+        <div class="draft-strip-letter active-execution">F</div>
+        <div class="draft-strip-letter">T</div>
+      </div>
+
+      <p class="intro-text">Dit is waar de meeste frameworks stoppen. "Het werkt voor mij" is niet hetzelfde als "het werkt voor het team." Feedback is de realiteitscheck.</p>
+
+      <h3>Drie vragen</h3>
+      <div class="three-questions">
+        <div class="question-pill"><span class="q-number">1</span> Heb je het gebruikt? Hoe vaak?</div>
+        <div class="question-pill"><span class="q-number">2</span> Wat werkte?</div>
+        <div class="question-pill"><span class="q-number">3</span> Wat werkte niet?</div>
+      </div>
+
+      <div class="callout">
+        Als iemand zegt "ik heb het één keer geprobeerd en ben teruggegaan naar de oude manier" — verdedig de oplossing dan niet. Pas hem aan.
+      </div>
+    </section>
+
+    <hr class="divider">
+
+    <!-- TEAMIFY -->
+    <section class="section" id="teamify">
+      <div class="section-header">
+        <div class="draft-badge execution">T</div>
+        <div class="section-header-text">
+          <h2>Teamify <span class="slide-ref">Slide 14</span> <span class="time-badge">20 min</span></h2>
+          <p class="section-sub">Van "mijn tool" naar "onze werkwijze"</p>
+        </div>
+      </div>
+
+      <div class="draft-strip">
+        <div class="draft-strip-letter">D</div>
+        <div class="draft-strip-letter">R</div>
+        <div class="draft-strip-letter">A</div>
+        <div class="draft-strip-letter">F</div>
+        <div class="draft-strip-letter active-execution">T</div>
+      </div>
+
+      <p class="intro-text">Dit is de stap die het verschil maakt tussen een leuk experiment en een echte verandering. Bouwen is makkelijk. Het laten beklijven is het werk.</p>
+
+      <h3>Documenteer op één pagina</h3>
+      <div class="one-pager">
+        <ul>
+          <li><strong>Wat doet het</strong> — één zin</li>
+          <li><strong>Wanneer gebruik je het</strong> — welke situatie triggert dit</li>
+          <li><strong>Hoe gebruik je het</strong> — stap voor stap</li>
+          <li><strong>Hoe ziet goede output eruit</strong> — één voorbeeld</li>
+          <li><strong>Wie vraag je als het niet werkt</strong> — de eigenaar</li>
+        </ul>
+      </div>
+
+      <h3>Wijs een eigenaar aan</h3>
+      <p>Niet "het team" — een persoon. Die houdt de instructies actueel, verzamelt feedback en past aan waar nodig. Zonder eigenaar vervalt het binnen een maand.</p>
+
+      <h3>Maak het de standaard</h3>
+      <p>De leidinggevende moet zeggen: "Dit is hoe we dit voortaan doen." Niet als opdracht, maar als duidelijk signaal. Zolang de oude en nieuwe manier naast elkaar bestaan zonder voorkeur, kiest iedereen wat ze al kennen.</p>
+    </section>
+
+    <hr class="divider">
+
+    <!-- RESOURCES -->
+    <section class="section" id="resources">
+      <h3>HAN Resources</h3>
+      <ul>
+        <li><strong><a href="https://www.han.nl/onderwijsondersteuning/leren-werken-met-ict/artificial-intelligence/ai-in-je-onderwijs/HAN-Integrated-AI-Framework-1.0-27062025.pdf" target="_blank" rel="noopener">HAN Integrated AI Framework</a></strong> — richtlijnen voor verantwoord AI-gebruik bij de HAN</li>
+        <li><strong>AI Hub</strong> — veilige experimenteeromgeving</li>
+        <li><strong>Arda</strong> — privacy en databescherming</li>
+      </ul>
+      <div class="callout" style="margin-top:1rem;">
+        Gebruik geen persoonsgegevens of vertrouwelijke informatie in publieke AI-tools.
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <h3>Contact</h3>
+      <p>Vragen? Loop even langs of stuur een mail.</p>
+      <p><strong>Guus Witjes</strong> · AI Desk · <a href="mailto:guus.witjes@han.nl" style="color:var(--han-pink);">guus.witjes@han.nl</a></p>
+    </section>
+
+  </main>
+</div>
+
+<footer class="footer">
+  <strong>AI Hackathon Playbook</strong> · SD MC · HAN University of Applied Sciences · 17 maart 2026
+</footer>
+
+<script>
+  // Copy prompt
+  function copyPrompt(btn) {
+    const pre = btn.nextElementSibling;
+    navigator.clipboard.writeText(pre.textContent).then(() => {
+      btn.textContent = 'Gekopieerd';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = 'Kopieer';
+        btn.classList.remove('copied');
+      }, 2000);
+    });
+  }
+
+  // Install tabs
+  function showTab(tool) {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.getElementById('tab-' + tool).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  // Active nav on scroll
+  const sections = document.querySelectorAll('.section[id]');
+  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const match = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (match) match.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
